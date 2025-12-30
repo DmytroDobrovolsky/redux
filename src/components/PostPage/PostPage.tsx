@@ -11,12 +11,12 @@ const PostPage = () => {
 
     const { usersPosts, users } = useSelector((state: RootState) => state.counter);
 
-    const { handleChangePostInput, confirmButtClick, handleChangeSelect, likeButtClick, commentButtClick, repostButtClick, userPost, status } = usePostPage(users);
+    const { handleChangePostInput, confirmButtClick, handleChangeSelect, likeButtClick, commentButtClick, repostButtClick, userPost, status, selectVal } = usePostPage(users);
 
     return (
         <div className="postsPage">
                 <form className="inputsCont">
-                    <select className="selectInp" value={userPost.userName || ""} onChange={handleChangeSelect}>
+                    <select className="selectInp" value={selectVal || ""} onChange={handleChangeSelect}>
                         <option value="" disabled> Select User </option>
                         {users.map((user) => (
                             <option key={user.userName + user.userName.length}>{user.userName}</option>
@@ -28,7 +28,7 @@ const PostPage = () => {
                     <input name="userImg"  className="inputs" type="text" placeholder="Your post Img" value={userPost.userImg} onChange={handleChangePostInput} />
                     <textarea name="text" className="myPost" placeholder="Your post" value={userPost.text} onChange={handleChangePostInput}></textarea>
                     <button type="button" className="confirmButt" onClick={confirmButtClick}>Confirm</button>
-                    {!status && (<p> Fill in all the fields</p>)}
+                    {!status && (<p className="pError"> Fill in all the fields</p>)}
                 </form>
             <div className="postsCont">
                 <h2 className="h1Post">Posts</h2>

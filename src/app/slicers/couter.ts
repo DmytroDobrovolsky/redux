@@ -10,12 +10,27 @@ export interface CounterState {
 
 
 const initialState: CounterState = {
-  usersPosts: [{ postId: 1, reposted: false, commented: false, liked: false, userLogo: "https://picsum.photos/200/200?random1", name: "Lara", userName: "laraGG", data: "24 September 2025", text: "I miss my shool", userImg: "https://picsum.photos/200/200?random2", like: 1, repost: 1, comment: 1 },
-  { postId: 12, reposted: false, commented: false, liked: false, userLogo: "https://picsum.photos/200/200?random3", name: "Mark", userName: "Avreliy", data: "14 December 2025", text: "This is so funny", userImg: "https://picsum.photos/200/200?random4", like: 2, repost: 2, comment: 2 },
-  { postId: 23, reposted: false, commented: false, liked: false, userLogo: "https://picsum.photos/200/200?random5", name: "Dante", userName: "Aligyery", data: "9 October 2025", text: "Remember this day", userImg: "https://picsum.photos/200/200?random6", like: 3, repost: 3, comment: 3 }],
-  users: [{ name: "Lara", userName: "laraGG" }, { name: "Mark", userName: "Avreliy" }, { name: "Dante", userName: "Aligyery" }]
-
-
+  usersPosts: [{
+    postId: 1, reposted: false, commented: false, liked: false,
+    userLogo: "https://picsum.photos/200/200?random1", name: "Lara", userName: "laraGG",
+    data: "24 September 2025", text: "I miss my shool", userImg: "https://picsum.photos/200/200?random2",
+    like: 1, repost: 1, comment: 1
+  },
+  {
+    postId: 12, reposted: false, commented: false, liked: false,
+    userLogo: "https://picsum.photos/200/200?random3", name: "Mark", userName: "Avreliy",
+    data: "14 December 2025", text: "This is so funny", userImg: "https://picsum.photos/200/200?random4",
+    like: 2, repost: 2, comment: 2
+  },
+  {
+    postId: 23, reposted: false, commented: false, liked: false,
+    userLogo: "https://picsum.photos/200/200?random5", name: "Dante", userName: "Aligyery",
+    data: "9 October 2025", text: "Remember this day", userImg: "https://picsum.photos/200/200?random6",
+    like: 3, repost: 3, comment: 3
+  }],
+  users: [{ name: "Lara", userName: "laraGG" },
+  { name: "Mark", userName: "Avreliy" },
+  { name: "Dante", userName: "Aligyery" }]
 }
 
 export const counterSlice = createSlice({
@@ -23,15 +38,15 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
 
-    addUser: (state, action) => {
+    UserSlice: (state, action) => {
       state.users.push(action.payload);
     },
 
-    addPost: (state, action) => {
+    PostSlice: (state, action) => {
       state.usersPosts.unshift(action.payload);
     },
 
-    likePost: (state, action) => {
+    LikeSlice: (state, action) => {
       const post = state.usersPosts.find(p => p.postId === action.payload);
       if (post) {
         if (!post.liked) {
@@ -44,7 +59,7 @@ export const counterSlice = createSlice({
         }
       }
     },
-      commentPost: (state, action) => {
+    CommentSlice: (state, action) => {
       const post = state.usersPosts.find(p => p.postId === action.payload);
       if (post) {
         if (!post.commented) {
@@ -58,7 +73,7 @@ export const counterSlice = createSlice({
       }
     },
 
-repostPost:(state, action) => {
+    RepostSlice: (state, action) => {
       const post = state.usersPosts.find(p => p.postId === action.payload);
       if (post) {
         if (!post.reposted) {
@@ -75,6 +90,6 @@ repostPost:(state, action) => {
   }
 })
 
-export const { addUser, addPost, likePost, commentPost, repostPost } = counterSlice.actions
+export const { UserSlice, PostSlice, LikeSlice, CommentSlice, RepostSlice } = counterSlice.actions
 
 export default counterSlice.reducer

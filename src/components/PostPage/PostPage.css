@@ -156,3 +156,9 @@
     margin: 0;
     margin-left: auto;
 }
+
+.pError{
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+}

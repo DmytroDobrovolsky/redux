@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUser, addPost, likePost, commentPost, repostPost } from "../../app/slicers/couter";
+import {  UserSlice, PostSlice, LikeSlice, CommentSlice, RepostSlice } from "../../app/slicers/couter";
 
 export const usePostPage = (users: ({ name: string, userName: string })[]) => {
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
     const [status, setStatus] = useState(true);
     const [selectVal, setSelectVal] = useState("")
 
-    const usersValidation = () => {
+    const existsUser = () => {
         const exists = users.some((user) => user.name === userPost.name && user.userName === userPost.userName);
         const result = !exists;
         const newUserObj = {
@@ -46,7 +46,7 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
     }
 
     const confirmButtClick = () => {
-        const isUser = usersValidation();
+        const isUser = existsUser();
         const emptyKeys = Object.values(userPost);
         const today = new Date();
         const formatted = today.toLocaleDateString("en-GB", {
@@ -54,41 +54,38 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
             month: "short",
             year: "numeric"
         });
-        
-        const addNewInfoToPost = { ...userPost, data: formatted, postId: Math.random() };
+
+        const NewInfoPost = { ...userPost, data: formatted, postId: Math.random() };
+        console.log(isUser);
 
         if (emptyKeys.includes("")) {
             setStatus(false);
+            return;
         }
         else if (isUser !== undefined) {
-            dispatch(addUser(isUser));
-            dispatch(addPost(addNewInfoToPost));
-            setStatus(true);
-            setUserPost({
-                reposted: false, commented: false, liked: false, postId: 0, userLogo: "", name: "", userName: "", data: formatted, text: "", userImg: "", like: 0, repost: 0,
-                comment: 0,
-            });
+            dispatch(UserSlice(isUser));
         }
-        else {
-            dispatch(addPost(addNewInfoToPost));
-            setStatus(true);
-            setUserPost({
-                reposted: false, commented: false, liked: false, postId: 0, userLogo: "", name: "", userName: "", data: formatted, text: "", userImg: "", like: 0, repost: 0,
-                comment: 0,
-            });
-        }
+        dispatch(PostSlice(NewInfoPost));
+        setStatus(true);
+        setUserPost({
+            reposted: false, commented: false, liked: false,
+            postId: 0, userLogo: "", name: "", userName: "",
+            data: formatted, text: "", userImg: "", like: 0, repost: 0,
+            comment: 0
+        });
+        setSelectVal("");
     }
 
     const likeButtClick = (postId: number) => {
-        dispatch(likePost(postId));
+        dispatch(LikeSlice(postId));
     }
 
     const commentButtClick = (postId: number) => {
-        dispatch(commentPost(postId));
+        dispatch(CommentSlice(postId));
     }
 
     const repostButtClick = (postId: number) => {
-        dispatch(repostPost(postId));
+        dispatch(RepostSlice(postId));
     }
 
     useEffect(() => {
@@ -99,5 +96,5 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
         });
     }, [users, selectVal]);
 
-    return { handleChangePostInput, handleChangeSelect, confirmButtClick, likeButtClick, commentButtClick, repostButtClick, userPost, status };
+    return { handleChangePostInput, handleChangeSelect, confirmButtClick, likeButtClick, commentButtClick, repostButtClick, userPost, status, selectVal };
 }
