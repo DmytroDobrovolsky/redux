@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/redux/static/css/main.9ff6991e.css",
-    "main.js": "/redux/static/js/main.a65db80e.js",
+    "main.js": "/redux/static/js/main.b1e78541.js",
     "index.html": "/redux/index.html",
     "main.9ff6991e.css.map": "/redux/static/css/main.9ff6991e.css.map",
-    "main.a65db80e.js.map": "/redux/static/js/main.a65db80e.js.map"
+    "main.b1e78541.js.map": "/redux/static/js/main.b1e78541.js.map"
   },
   "entrypoints": [
     "static/css/main.9ff6991e.css",
-    "static/js/main.a65db80e.js"
+    "static/js/main.b1e78541.js"
   ]
 }
