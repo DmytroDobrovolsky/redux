@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {  UserSlice, PostSlice, LikeSlice, CommentSlice, RepostSlice } from "../../app/slicers/couter";
+import { UserSlice, PostSlice, LikeSlice, CommentSlice, RepostSlice } from "../../app/slicers/couter";
 
 export const usePostPage = (users: ({ name: string, userName: string })[]) => {
     const dispatch = useDispatch();
@@ -46,7 +46,7 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
     }
 
     const confirmButtClick = () => {
-        const isUser = existsUser();
+        const checkUserName = existsUser();
         const emptyKeys = Object.values(userPost);
         const today = new Date();
         const formatted = today.toLocaleDateString("en-GB", {
@@ -55,22 +55,30 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
             year: "numeric"
         });
 
-        const NewInfoPost = { ...userPost, data: formatted, postId: Math.random() };
-        console.log(isUser);
+        const newInfoPost = { ...userPost, data: formatted, postId: Math.random() };
 
         if (emptyKeys.includes("")) {
             setStatus(false);
             return;
         }
-        else if (isUser !== undefined) {
-            dispatch(UserSlice(isUser));
+        else if (checkUserName !== undefined) {
+            dispatch(UserSlice(checkUserName));
         }
-        dispatch(PostSlice(NewInfoPost));
+        dispatch(PostSlice(newInfoPost));
         setStatus(true);
         setUserPost({
-            reposted: false, commented: false, liked: false,
-            postId: 0, userLogo: "", name: "", userName: "",
-            data: formatted, text: "", userImg: "", like: 0, repost: 0,
+            reposted: false,
+            commented: false,
+            liked: false,
+            postId: 0,
+            userLogo: "",
+            name: "",
+            userName: "",
+            data: formatted,
+            text: "",
+            userImg: "",
+            like: 0,
+            repost: 0,
             comment: 0
         });
         setSelectVal("");
@@ -96,5 +104,15 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
         });
     }, [users, selectVal]);
 
-    return { handleChangePostInput, handleChangeSelect, confirmButtClick, likeButtClick, commentButtClick, repostButtClick, userPost, status, selectVal };
+    return {
+        handleChangePostInput,
+        handleChangeSelect,
+        confirmButtClick,
+        likeButtClick,
+        commentButtClick,
+        repostButtClick,
+        userPost,
+        status,
+        selectVal
+    };
 }
