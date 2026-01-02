@@ -46,7 +46,7 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
     }
 
     const confirmButtClick = () => {
-        const checkUserName = existsUser();
+        const existedUser = existsUser();
         const emptyKeys = Object.values(userPost);
         const today = new Date();
         const formatted = today.toLocaleDateString("en-GB", {
@@ -61,8 +61,8 @@ export const usePostPage = (users: ({ name: string, userName: string })[]) => {
             setStatus(false);
             return;
         }
-        else if (checkUserName !== undefined) {
-            dispatch(UserSlice(checkUserName));
+        else if (existedUser !== undefined) {
+            dispatch(UserSlice(existedUser));
         }
         dispatch(PostSlice(newInfoPost));
         setStatus(true);
